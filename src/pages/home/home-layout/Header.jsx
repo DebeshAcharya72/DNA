@@ -1,46 +1,62 @@
-// Header.jsx
-import React from "react";
-import { AppBar, Toolbar, Box, Typography, Link } from "@mui/material";
+import React, { useState } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Box,
+  Typography,
+  Link,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
+
+// ------------------ STYLES ------------------
+
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  background: "rgba(255, 255, 255, 0.7)",
+  backdropFilter: "blur(12px)",
+  WebkitBackdropFilter: "blur(12px)",
+  boxShadow: "0px 4px 20px rgba(0,0,0,0.08)",
+  borderBottom: "1px solid rgba(255,255,255,0.3)",
+}));
 
 const LightningBoltIcon = () => (
   <svg
-    width="24"
-    height="24"
+    width="32"
+    height="32"
     viewBox="0 0 24 24"
-    fill="none"
+    fill="#00C8FF"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <path d="M13 9L11 15H17L15 9H13Z" fill="#00C8FF" />
-    <path
-      d="M13 9L11 15H17L15 9H13Z"
-      stroke="#00C8FF"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M13 2L3 14H11L9 22L19 10H11L13 2Z" />
   </svg>
 );
 
-// Fixed, glassmorphic header
-const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  position: "fixed",
-  top: 0,
-  left: 0,
-  right: 0,
-  backdropFilter: "blur(10px)",
-  backgroundColor: "rgba(255, 255, 255, 0.9)",
-  boxShadow: "0 2px 10px rgba(0, 0, 0, 0.05)",
-  zIndex: 1300,
-  transition: "background-color 0.3s ease",
-  "&:hover": {
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
-  },
-}));
+// ------------------ MAIN HEADER COMPONENT ------------------
 
-const Header = () => {
+const Header = ({ aboutRef }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleOpenServices = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseServices = () => {
+    setAnchorEl(null);
+  };
+
+  // Dropdown menu items
+  const servicesList = [
+    "Digital Transformation",
+    "Data Analytics",
+    "Cloud Solutions",
+    "Cyber Security",
+    "AI & Machine Learning",
+    "Custom Software Development",
+  ];
+
   return (
-    <StyledAppBar elevation={0}>
+    <StyledAppBar elevation={0} position="sticky">
       <Toolbar
         sx={{
           justifyContent: "space-between",
@@ -48,7 +64,7 @@ const Header = () => {
           minHeight: { xs: 56, md: 64 },
         }}
       >
-        {/* Logo */}
+        {/* Logo Section */}
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.2 }}>
           <LightningBoltIcon />
           <Box>
@@ -63,6 +79,7 @@ const Header = () => {
             >
               DNA Infotech
             </Typography>
+
             <Typography
               variant="caption"
               sx={{
@@ -78,40 +95,133 @@ const Header = () => {
           </Box>
         </Box>
 
-        {/* Navigation — Modern, no Grid */}
+        {/* Navigation Links */}
         <Box
           sx={{
             display: "flex",
-            gap: { xs: 1.5, sm: 2, md: 2.5 },
+            gap: { xs: 1.5, sm: 2.4, md: 3 },
             alignItems: "center",
           }}
         >
-          {[
-            "Home",
-            "About Us",
-            "Our Services",
-            "Industry",
-            "Careers",
-            "Contact Us",
-          ].map((item) => (
-            <Link
-              key={item}
-              href="#"
-              sx={{
-                color: item === "Home" ? "#00C8FF" : "#333333",
-                textDecoration: "none",
-                fontWeight: item === "Home" ? 700 : 600,
-                fontSize: { xs: "0.875rem", sm: "1rem" },
-                transition: "color 0.2s ease, transform 0.2s ease",
-                "&:hover": {
-                  color: "#00C8FF",
-                  transform: "scale(1.05)",
-                },
-              }}
-            >
-              {item}
-            </Link>
-          ))}
+          {/* Home */}
+          <Link
+            href="#"
+            sx={{
+              color: "#00C8FF",
+              textDecoration: "none",
+              fontWeight: 700,
+              fontSize: { xs: "0.875rem", sm: "1rem" },
+            }}
+          >
+            Home
+          </Link>
+
+          {/* About */}
+          <Typography
+            onClick={() => {
+              aboutRef?.current?.scrollIntoView({ behavior: "smooth" });
+            }}
+            sx={{
+              color: "#333",
+              textDecoration: "none",
+              fontWeight: 600,
+              cursor: "pointer",
+              fontSize: { xs: "0.875rem", sm: "1rem" },
+              "&:hover": { color: "#00C8FF" },
+            }}
+          >
+            About Us
+          </Typography>
+
+          {/* OUR SERVICES dropdown */}
+          <Typography
+            onClick={handleOpenServices}
+            sx={{
+              color: "#333333",
+              fontWeight: 600,
+              cursor: "pointer",
+              fontSize: { xs: "0.875rem", sm: "1rem" },
+              "&:hover": { color: "#00C8FF" },
+            }}
+          >
+            Our Services
+          </Typography>
+
+          {/* Dropdown Menu */}
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleCloseServices}
+            PaperProps={{
+              sx: {
+                mt: 1,
+                borderRadius: 2,
+                minWidth: 250,
+                background: "rgba(255, 255, 255, 0.95)",
+                boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
+                backdropFilter: "blur(8px)",
+              },
+            }}
+          >
+            {servicesList.map((service, index) => (
+              <MenuItem
+                key={index}
+                sx={{
+                  fontWeight: 500,
+                  paddingY: 1,
+                  "&:hover": {
+                    backgroundColor: "rgba(0,200,255,0.1)",
+                    color: "#00C8FF",
+                  },
+                }}
+                onClick={handleCloseServices}
+              >
+                {service}
+              </MenuItem>
+            ))}
+          </Menu>
+
+          {/* Industry */}
+          <Link
+            href="#"
+            sx={{
+              color: "#333",
+              textDecoration: "none",
+              fontWeight: 600,
+              fontSize: { xs: "0.875rem", sm: "1rem" },
+              "&:hover": { color: "#00C8FF" },
+            }}
+          >
+            Industry
+          </Link>
+
+          {/* Careers */}
+          <Link
+            href="#"
+            sx={{
+              color: "#333",
+              textDecoration: "none",
+              fontWeight: 600,
+              fontSize: { xs: "0.875rem", sm: "1rem" },
+              "&:hover": { color: "#00C8FF" },
+            }}
+          >
+            Careers
+          </Link>
+
+          {/* Contact */}
+          <Link
+            href="#"
+            sx={{
+              color: "#333",
+              fontWeight: 600,
+              textDecoration: "none",
+              fontSize: { xs: "0.875rem", sm: "1rem" },
+              "&:hover": { color: "#00C8FF" },
+            }}
+          >
+            Contact Us
+          </Link>
         </Box>
       </Toolbar>
     </StyledAppBar>
