@@ -105,7 +105,7 @@ const Header = ({ aboutRef }) => {
         >
           {/* Home */}
           <Link
-            href="#"
+            href="/"
             sx={{
               color: "#00C8FF",
               textDecoration: "none",
@@ -211,7 +211,7 @@ const Header = ({ aboutRef }) => {
 
           {/* Contact */}
           <Link
-            href="#"
+            href="/contact-us"
             sx={{
               color: "#333",
               fontWeight: 600,

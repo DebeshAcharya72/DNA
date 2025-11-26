@@ -7,7 +7,7 @@ const HomeLayout = ({ children, aboutRef }) => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header aboutRef={aboutRef} />
-      <Box component="main" sx={{ flexGrow: 1, py: 4 }}>
+      <Box component="main" sx={{ flexGrow: 1 }}>
         {children}
       </Box>
       <Footer />

@@ -1,76 +1,41 @@
 // AboutUsSection.jsx
 import React from "react";
-import {
-  Box,
-  Typography,
-  Container,
-  Stack,
-  Card,
-  useTheme,
-} from "@mui/material";
+import { Box, Typography, Container, Card, Grid } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import image2 from "../../../assets/images/image2.jpg";
 
-// Code Icon
-const CodeIcon = () => (
-  <svg
-    width="40"
-    height="40"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M10 8L6 12L10 16"
-      stroke="#00C8FF"
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
-    <path
-      d="M14 16L18 12L14 8"
-      stroke="#00C8FF"
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
-  </svg>
-);
+// Optional: Import your image
+import aboutImage from "../../../assets/images/image2.jpg";
 
-const StyledCard = styled(Card)(({ theme }) => ({
-  position: "relative",
-  borderRadius: "16px",
+// Light Glass Card for Image
+const LightImageCard = styled(Card)(({ theme }) => ({
+  backgroundColor: "white",
+  borderRadius: "20px",
+  border: "1px solid #e2e8f0",
+  boxShadow: "0 8px 24px rgba(0, 0, 0, 0.06)",
   overflow: "hidden",
-  boxShadow: "0 10px 30px rgba(0, 0, 0, 0.1)",
-  transition: "transform 0.3s ease",
+  height: "100%",
+  transition: "all 0.4s ease",
   "&:hover": {
     transform: "scale(1.02)",
+    boxShadow: "0 12px 32px rgba(0, 180, 216, 0.12)",
+    border: "1px solid #cceeff",
   },
 }));
 
-const CircleWrapper = styled(Box)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  width: 80,
-  height: 80,
-  borderRadius: "50%",
-  backgroundColor: "rgba(255, 255, 255, 0.9)",
-  boxShadow: "0 4px 20px rgba(0, 200, 255, 0.3)",
-  transition: "transform 0.3s ease",
-  "&:hover": {
-    transform: "scale(1.1) rotate(8deg)",
-  },
-}));
-
-const GlassOverlay = styled(Box)(({ theme }) => ({
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  right: 0,
-  padding: theme.spacing(3),
-  backdropFilter: "blur(12px)",
-  backgroundColor: "rgba(255, 255, 255, 0.25)",
-  borderTop: "1px solid rgba(255, 255, 255, 0.4)",
+// Light Stats Card
+const LightStatCard = styled(Card)(({ theme }) => ({
+  backgroundColor: "white",
+  borderRadius: "12px",
+  border: "1px solid #e2e8f0",
+  padding: theme.spacing(2),
   textAlign: "center",
+  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.03)",
+  transition: "all 0.3s ease",
+  "&:hover": {
+    transform: "translateY(-4px)",
+    boxShadow: "0 6px 16px rgba(0, 180, 216, 0.1)",
+    border: "1px solid #cceeff",
+  },
 }));
 
 const AboutUsSection = () => {
@@ -78,117 +43,211 @@ const AboutUsSection = () => {
     <Box
       sx={{
         py: { xs: 6, md: 10 },
-        bgcolor: "#F5FBFF",
+        backgroundColor: "#f5fbff",
         minHeight: "100vh",
         display: "flex",
         alignItems: "center",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
       <Container maxWidth="lg">
-        {/* Main layout: CSS Grid (no legacy Grid component) */}
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" },
-            gap: { xs: 4, md: 6 },
-            alignItems: "center",
-          }}
-        >
-          {/* Text Content — Left */}
-          <Stack spacing={{ xs: 2, md: 3 }}>
-            <Typography
-              variant="h2"
-              sx={{
-                color: "#00C8FF",
-                fontWeight: 700,
-                fontSize: { xs: "1.875rem", md: "2.25rem" },
-                textTransform: "uppercase",
-                letterSpacing: "1px",
-              }}
-            >
-              ABOUT US
-            </Typography>
-
-            <Typography sx={{ color: "#2D2D2D", lineHeight: 1.7 }}>
-              DNA Infotech is a <strong>Singapore-based</strong> technology
-              consulting and solutions company specializing in{" "}
-              <strong>Digital Transformation</strong>,{" "}
-              <strong>Data Analytics</strong>, and{" "}
-              <strong>Cloud Solutions</strong>.
-            </Typography>
-
-            <Typography sx={{ color: "#2D2D2D", lineHeight: 1.7 }}>
-              We partner with organizations across <strong>Telecom</strong>,{" "}
-              <strong>Banking</strong>, <strong>Insurance</strong>, and{" "}
-              <strong>Healthcare</strong> industries to deliver innovative
-              solutions that drive business value.
-            </Typography>
-
-            <Typography
-              sx={{
-                color: "#00C8FF",
-                fontWeight: 600,
-                fontStyle: "italic",
-                fontSize: { xs: "1rem", md: "1.125rem" },
-              }}
-            >
-              Experience + Expertise + Vision = Success
-            </Typography>
-
-            <Typography sx={{ color: "#2D2D2D", lineHeight: 1.7 }}>
-              Our team of expert technocrats combines deep industry knowledge
-              with cutting-edge technology to help you navigate the digital
-              landscape and achieve your strategic objectives.
-            </Typography>
-          </Stack>
-
-          {/* Visual Card — Right */}
-          <Box>
-            <StyledCard>
+        <Grid container spacing={4}>
+          {/* Left Side — Image Card */}
+          <Grid size={{ xs: 12, md: 6 }}>
+            <LightImageCard>
               <Box
                 component="img"
-                src={image2}
-                alt="Innovation background"
+                src={aboutImage}
+                alt="About DNA Infotech"
                 sx={{
                   width: "100%",
-                  height: "auto",
+                  height: "100%",
+                  objectFit: "cover",
                   display: "block",
-                  filter: "brightness(0.9)",
+                  filter: "brightness(1) saturate(1)",
                 }}
               />
+            </LightImageCard>
+          </Grid>
 
-              {/* Centered Icon */}
+          {/* Right Side — Text + Stats */}
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Box>
+              {/* Badge */}
               <Box
                 sx={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  zIndex: 2,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  px: 2,
+                  py: 0.7,
+                  borderRadius: "50px",
+                  backgroundColor: "rgba(0, 180, 216, 0.1)",
+                  border: "1px solid rgba(0, 180, 216, 0.2)",
+                  color: "#0077b6",
+                  fontSize: "0.875rem",
+                  fontWeight: 600,
+                  mb: 3,
                 }}
               >
-                <CircleWrapper>
-                  <CodeIcon />
-                </CircleWrapper>
+                About Us
               </Box>
 
-              {/* Bottom Glass Overlay */}
-              <GlassOverlay>
-                <Typography
-                  variant="h5"
-                  sx={{
-                    color: "#FFFFFF",
-                    fontWeight: 700,
-                    fontSize: { xs: "1.25rem", md: "1.5rem" },
-                    textShadow: "0 2px 4px rgba(0,0,0,0.3)",
-                  }}
-                >
-                  Powered by Innovation
-                </Typography>
-              </GlassOverlay>
-            </StyledCard>
-          </Box>
-        </Box>
+              {/* Title */}
+              <Typography
+                variant="h2"
+                sx={{
+                  color: "#0c1e3e", // Dark navy for readability
+                  fontWeight: 800,
+                  fontSize: { xs: "2rem", md: "2.8rem" },
+                  mb: 2,
+                  lineHeight: 1.2,
+                }}
+              >
+                Building Tomorrow's Technology Today
+              </Typography>
+
+              {/* Body Text */}
+              <Typography
+                sx={{
+                  color: "#4b5563", // Muted dark gray
+                  fontSize: "1.05rem",
+                  lineHeight: 1.7,
+                  mb: 3,
+                }}
+              >
+                DNA Infotech is a leading technology solutions provider,
+                specializing in digital transformation, cloud infrastructure,
+                and enterprise software development.
+              </Typography>
+
+              <Typography
+                sx={{
+                  color: "#4b5563",
+                  fontSize: "1.05rem",
+                  lineHeight: 1.7,
+                  mb: 3,
+                }}
+              >
+                With over a decade of experience and a team of 100+ skilled
+                professionals, we deliver innovative solutions that drive
+                business growth and operational excellence.
+              </Typography>
+
+              {/* Equation */}
+              <Typography
+                sx={{
+                  color: "#00B4D8",
+                  fontWeight: 700,
+                  fontSize: "1.1rem",
+                  mb: 4,
+                }}
+              >
+                Experience + Expertise + Vision = Success
+              </Typography>
+
+              {/* Stats Grid */}
+              <Grid container spacing={2}>
+                <Grid size={{ xs: 6 }}>
+                  <LightStatCard>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        color: "#00B4D8",
+                        fontWeight: 800,
+                        fontSize: "1.5rem",
+                        mb: 0.5,
+                      }}
+                    >
+                      10+
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: "#64748b",
+                        fontSize: "0.75rem",
+                      }}
+                    >
+                      Years Experience
+                    </Typography>
+                  </LightStatCard>
+                </Grid>
+                <Grid size={{ xs: 6 }}>
+                  <LightStatCard>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        color: "#00B4D8",
+                        fontWeight: 800,
+                        fontSize: "1.5rem",
+                        mb: 0.5,
+                      }}
+                    >
+                      200+
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: "#64748b",
+                        fontSize: "0.75rem",
+                      }}
+                    >
+                      Projects Delivered
+                    </Typography>
+                  </LightStatCard>
+                </Grid>
+                <Grid size={{ xs: 6 }}>
+                  <LightStatCard>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        color: "#00B4D8",
+                        fontWeight: 800,
+                        fontSize: "1.5rem",
+                        mb: 0.5,
+                      }}
+                    >
+                      50+
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: "#64748b",
+                        fontSize: "0.75rem",
+                      }}
+                    >
+                      Global Clients
+                    </Typography>
+                  </LightStatCard>
+                </Grid>
+                <Grid size={{ xs: 6 }}>
+                  <LightStatCard>
+                    <Typography
+                      variant="h4"
+                      sx={{
+                        color: "#00B4D8",
+                        fontWeight: 800,
+                        fontSize: "1.5rem",
+                        mb: 0.5,
+                      }}
+                    >
+                      100+
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: "#64748b",
+                        fontSize: "0.75rem",
+                      }}
+                    >
+                      Team Members
+                    </Typography>
+                  </LightStatCard>
+                </Grid>
+              </Grid>
+            </Box>
+          </Grid>
+        </Grid>
       </Container>
     </Box>
   );
